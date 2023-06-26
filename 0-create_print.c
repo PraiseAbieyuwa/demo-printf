@@ -46,13 +46,14 @@ void conversion(const char *format, int *max, va_list ptr)
  */
 int _printf(const char *format, ...)
 {
+	int rt = 0;
+	int i = 0;
+
 	if (format)
 	{
 		va_list ptr;
 
 		va_start(ptr, format);
-
-		int rt = 0, i = 0;
 
 		while (format[i] != '\0')
 		{
