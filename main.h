@@ -1,11 +1,14 @@
 #ifndef PRINT_F
 #define PRINT_F
 
+
 #include <limits.h>
 #include <stdio.h>
 #include <stdarg.h>
 #include <unistd.h>
 #include <unistd.h>
+
+#define UNUSED(x) (void)(x)
 
 typedef int (*specifier_handler)(va_list args, int *count);
 

@@ -46,6 +46,7 @@ int handle_string(va_list args, int *count)
 
 int handle_percent(va_list args, int *count)
 {
+	UNUSED(args);
 	_putchar('%');
 	(*count)++;
 	return (1);
