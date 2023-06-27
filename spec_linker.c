@@ -1,43 +1,34 @@
 #include "main.h"
-
 /**
- * get_handler - function to get the appropriate handler
- * @specifier:format specifier
- * Return:return necessary handles
+ * get_functions - links all the forMat specifier
+ * @x: variAble to a chara
+ * Return: success
  */
-specifier_handler get_handler(char specifier)
+int (*get_functions(char x))(va_list)
 {
-	switch (specifier)
-	{
-		case 'c':
-			return (&handle_char);
-		case 's':
-			return (&handle_string);
-		case '%':
-			return (0);
-		case 'd':
-		case 'i':
-			return (0);
-		case 'b':
-			return (0);
-		case 'u':
-			return (0);
-		/**
-		 * case 'o':
-			return (&handle_octal);
-		*case 'x':
-			return (&handle_hex);
-		*case 'X':
-			return (&handle_hex);
-		*case 'R':
-			return (&handle_rot13);
-		*case 'r':
-			return (&handle_reverse);
-		*case 'p':
-			return (&handle_pointer);
-		*/
-		default:
-			return (NULL);
+	int i = 0;
 
+	spec arr[] = {
+		{"c", print_c},
+		{"s", print_s},
+		{"%", print_percent},
+		{"d", print_d},
+		{"i", print_i},
+		/*{"b", decimalToBinary},*/
+		/*{"o", octal},*/
+		/*{"p", pointer},*/
+		/*{"x", hex},*/
+		/*{"X", HEX},*/
+		/*{"u", unsign},*/
+		/*{"r", reverse},*/
+		/*{"R", rot13},*/
+		{NULL, NULL}
+	};
+	while (arr[i].valid)
+	{
+		if (x == arr[i].valid[0])
+			return (arr[i].f);
+		i++;
 	}
+	return (NULL);
 }

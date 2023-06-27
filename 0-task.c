@@ -1,112 +1,99 @@
 #include "main.h"
 /**
- * handle_char - Handle a single character
- * @args: argument list
- * @count: character length
- * Return: 1 // since it's justa single character and that's the lenghtof a
- * single character
+ * print_c - prints character
+ * @args: character argument
+ * Return: number of characters
  */
-
-int handle_char(va_list args, int *count)
+int print_c(va_list args)
 {
-	int i = va_arg(args, int);
+	int c;
 
-	_putchar(i);
-	(*count)++;
-	return (1);
+	c = va_arg(args, int);
+	return (_putchar(c));
 }
 
 /**
- * handle_string - Handle strings specifier
- * @args: argument list
- * @count: character length
- * Return: length of string read
+ * print_s - prints a string
+ * @args: string  argument
+ * Return: number of characters
  */
-
-int handle_string(va_list args, int *count)
+int print_s(va_list args)
 {
-	char *str = va_arg(args, char *);
-	int len = 0;
+	int i, count = 0;
+	char *str;
 
-	while (str[len] != '\0')
+	i = 0;
+	str = va_arg(args, char *);
+	if (str == NULL)
+		str = "(null)";
+
+	while (str[i] != '\0')
 	{
-		_putchar(str[len]);
-		(*count)++;
-		len++;
+		_putchar(str[i]);
+		i++;
+		count++;
 	}
-	return (len);
+	return (count);
 }
 
 /**
- * handle_percent - Handle percent specifier
- * @count: character length to be returned
- * @args:second para
- * Return: length of string read
+ * print_percent - pass the percent sing
+ * @args: string  argument
+ * Return: return the percent sing
+ *
  */
-
-int handle_percent(va_list args, int *count)
+int print_percent(va_list args)
 {
-	UNUSED(args);
-	_putchar('%');
-	(*count)++;
-	return (1);
+	char *str;
+
+	str = "%";
+	if (va_arg(args, int) == *str)
+	{
+		return (*str);
+	}
+	return (*str);
 }
 
 /**
- * power - function that handles power
- * @base:base num
- * @exponent:expon num
- * Return:results
+ * print_d - prints a decimal
+ * @args: decimal argument
+ * Return: counter
  */
-int power(int base, int exponent)
+int print_d(va_list args)
 {
-	int result = 1;
+	unsigned int absolute, aux, countnum, count;
+	int n;
 
-	while (exponent > 0)
+	count = 0;
+	n = va_arg(args, int);
+	if (n < 0)
 	{
-		result *= base;
-		exponent--;
+		absolute = (n * -1);
+		count += _putchar('-');
 	}
-	return (result);
+	else
+		absolute = n;
+	aux = absolute;
+	countnum = 1;
+	while (aux > 9)
+	{
+		aux /= 10;
+		countnum *= 10;
+	}
+	while (countnum >= 1)
+	{
+		count += _putchar(((absolute / countnum) % 10) + '0');
+		countnum /= 10;
+	}
+	return (count);
 }
+
 /**
- * handle_integer - Handle integer specifier
- * @args: argument list
- * Return: length of string read
+ * print_i - prints integer
+ * @args: integer argument
+ * Return: the decimal function
  */
-int handle_integer(va_list args)
+int print_i(va_list args)
 {
-	int num = va_arg(args, int); /*Get the integer argument*/
-	int digits = 0;
-	int temp = num;
-	int i = 0;
-
-	/*Handle negative numbers*/
-	if (num < 0)
-	{
-		_putchar('-');
-		num = -num;
-		temp = num;
-		digits++;
-	}
-
-	/*Calculate the number of digits*/
-	while (temp != 0)
-	{
-		temp /= 10;
-		digits++;
-	}
-
-	/* Print the digits in correct order, skipping the leading zero if present*/
-	for (i = digits - 1; i >= 0; i--)
-	{
-		int digit = num / power(10, i) % 10;
-
-		if (digit != 0 || (digit == 0 && i == 0))
-		{
-			_putchar('0' + digit);
-		}
-	}
-
-	return (digits);
+	return (print_d(args));
 }
